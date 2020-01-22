@@ -28,3 +28,5 @@ k) If its not necessary to keep the variables shared with other classes, the pri
 l) The use of other package for the database access and handling is necesary. 
 
 m) When the messageText is trimmed. Its not assigned again to the variable. In my tests the method trim() dont modifies the same String, it returns a new trimmed string.
+
+n) The database name is missing at the connection sentence.
