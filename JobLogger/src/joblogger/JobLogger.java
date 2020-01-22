@@ -1,9 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package joblogger;
+package jlogger;
 
 import database.dbUtils;
 
@@ -16,7 +11,7 @@ import java.util.logging.*;
  *
  * @author leo
  */
-public class JobLogger {
+public class Jlogger {
     
     private static boolean logToFile;
     private static boolean logToConsole;
@@ -27,7 +22,7 @@ public class JobLogger {
     private static Map dbParams;
     private static Logger logger;
     
-    public JobLogger(boolean logToFileParam, boolean logToConsoleParam, boolean logToDatabaseParam,
+    public Jlogger(boolean logToFileParam, boolean logToConsoleParam, boolean logToDatabaseParam,
 			boolean logMessageParam, boolean logWarningParam, boolean logErrorParam, Map dbParamsMap) {
 		logger = Logger.getLogger("MyLog");  
 		logError = logErrorParam;
@@ -39,9 +34,22 @@ public class JobLogger {
 		dbParams = dbParamsMap;
 	}
     
-//    public static void main(String[] args) {
-//                  
-//    }
+    public static void main(String[] args) throws Exception {
+        Map<String, String> dbParamsMap=new HashMap<String, String>();
+        dbParamsMap.put("logFileFolder", "/p_wrk1");
+        dbParamsMap.put("database", "testdatabase");
+        dbParamsMap.put("userName", "Leo");
+        dbParamsMap.put("password", "bElatr1x**");
+        dbParamsMap.put("serverName", "localhost");
+        dbParamsMap.put("dbms", "postgresql");
+        dbParamsMap.put("portNumber", "5432");
+        dbParamsMap.put("dbName", "logsbelatrix");
+        Jlogger obj= new Jlogger(false, false, false, true, true, true, dbParamsMap);
+         boolean message = true;
+        boolean warning = false;
+        boolean error = false;
+        obj.LogMessage("testMessage", message, warning, error);
+    }
     public  void LogMessage(String messageText, boolean message, boolean warning, boolean error) throws Exception {
                 messageText=messageText.trim();
 		if (messageText.isEmpty()){
@@ -52,9 +60,12 @@ public class JobLogger {
                     }else if((!logError && !logMessage && !logWarning) || !message && !error && !warning){
                         throw new Exception("Error or Warning or Message must be specified");
                     }else{
-                        database.dbUtils.connectDB(dbParams);
+                        if (logToDatabase){
+                            database.dbUtils.connectDB(dbParams);
+                        }
 		        ObjTAndL dataTAndL=BuildVarsLandT(message, error, warning, messageText);
                         File logFile = new File(dbParams.get("logFileFolder") + "/logFile.txt");
+                       
                         if (!logFile.exists()) {
                             logFile.createNewFile();
                         }
@@ -66,7 +77,7 @@ public class JobLogger {
     }
     
     public static ObjTAndL BuildVarsLandT(boolean message, boolean error, boolean warning, String messageText){
-                String l=null;
+                String l="";
                 int t=0;
                 ObjTAndL numStringBld;
                 if (message && logMessage) {
@@ -98,8 +109,9 @@ public class JobLogger {
 		}
 		if(logToDatabase) {
 			dbUtils.update(messageComplete, t);
+                        dbUtils.closeDB();
 		}
-                dbUtils.closeDB();
+                
     }
     
     public static class ObjTAndL{
