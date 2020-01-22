@@ -9,12 +9,8 @@ import database.dbUtils;
 
 import java.io.File;
 import java.text.DateFormat;
-import java.util.Date;
-import java.util.Map;
-import java.util.logging.ConsoleHandler;
-import java.util.logging.FileHandler;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.*;
+import java.util.logging.*;
 
 /**
  *
