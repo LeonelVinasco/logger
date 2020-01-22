@@ -33,6 +33,6 @@ m) When the messageText is trimmed. Its not assigned again to the variable. In m
 
 n) The database name is missing at the connection sentence.
 
-o) The databasename is missing in the parameters map. It must be included in the connection sentence.
+o) The databasename is missing in the parameters map. 
 
 p) The level of the log can be severity in any option. 
