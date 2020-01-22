@@ -1,3 +1,5 @@
+<h3> Comments</h3>
+
 a) At the beggining of the code, in the importation list,
    some lines can be removed by importing the complete libraries:
    java.util.*, java.sql.*, java.util.logging.
@@ -30,3 +32,7 @@ l) The use of other package for the database access and handling is necesary.
 m) When the messageText is trimmed. Its not assigned again to the variable. In my tests the method trim() dont modifies the same String, it returns a new trimmed string.
 
 n) The database name is missing at the connection sentence.
+
+o) The databasename is missing in the parameters map. It must be included in the connection sentence.
+
+p) The level of the log can be severity in any option. 
